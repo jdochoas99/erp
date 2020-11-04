@@ -7,6 +7,7 @@ class Produto(models.Model):
     tipoDeItem  = models.ForeignKey('tipoItemProduto', related_name='tipodeitem', on_delete=models.CASCADE)
     unidade =  models.ForeignKey('unidadeProduto', related_name='unidade', on_delete=models.CASCADE)
     categoria =  models.ForeignKey('categoriaProduto', related_name='unidade', on_delete=models.CASCADE)
+    subcategoria =  models.ForeignKey('subcategoriaProduto', related_name='unidade', on_delete=models.CASCADE)
     modelo = models.CharField(max_length=25)
     marca = models.CharField(max_length=25)
     tags = models.CharField(max_length=25)
@@ -28,14 +29,14 @@ class tipoItemProduto(models.Model):
 
 class categoriaProduto(models.Model):
     categoriaReferente = models.CharField(max_length=22)
-    subcategoria =  models.ForeignKey('subcategoriaProduto', related_name='unidade', on_delete=models.CASCADE)
     def __str__(self):
-       return f"{self.categoriaReferente}"
+       return f"{self.categoriaReferente}, {self.subcategoriaReferente}"
 
 class subcategoriaProduto(models.Model):
     subcategoriaReferente = models.CharField(max_length=22)
     def __str__(self):
        return f"{self.subcategoriaReferente}"
+
 class ProdutoEstoque(models.Model):
     movimentarEstoque = models.BooleanField()
     movimentarEstoqueCompisicao = models.BooleanField()
