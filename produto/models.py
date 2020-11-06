@@ -6,16 +6,16 @@ class Produto(models.Model):
     codigo = models.IntegerField()
     tipoDeItem  = models.ForeignKey('tipoItemProduto', related_name='tipodeitem', on_delete=models.CASCADE)
     unidade =  models.ForeignKey('unidadeProduto', related_name='unidade', on_delete=models.CASCADE)
-    categoria =  models.ForeignKey('categoriaProduto', related_name='unidade', on_delete=models.CASCADE)
-    subcategoria =  models.ForeignKey('subcategoriaProduto', related_name='unidade', on_delete=models.CASCADE)
+    categoria =    models.ForeignKey('categoriaProduto', related_name='categoria', on_delete=models.CASCADE)
+    subcategoria =    models.ForeignKey('subcategoriaProduto', related_name='subcategoria', on_delete=models.CASCADE)
     modelo = models.CharField(max_length=25)
     marca = models.CharField(max_length=25)
-    tags = models.CharField(max_length=25)
-    codigoInterno = models.CharField(max_length=25)
-    codigoBalanca = models.CharField(max_length=25)
-    photo = models.ImageField(upload_to='produtopy')
+    tags = models.CharField(max_length=25,blank=True)
+    codigoInterno = models.CharField(max_length=25,blank=True)
+    codigoBalanca = models.CharField(max_length=25,blank=True)
+    photo = models.ImageField(upload_to='produtopy',blank=True)
     def __str__(self):
-       return f"{self.nome}, codigo: {self.codigo}"
+       return f"{self.descricao}, codigo: {self.codigo}"
 
 class unidadeProduto(models.Model):
     unidadereferente = models.CharField(max_length=22)
@@ -28,14 +28,27 @@ class tipoItemProduto(models.Model):
        return f"{self.tipoDeItem}"
 
 class categoriaProduto(models.Model):
-    categoriaReferente = models.CharField(max_length=22)
+    name = models.CharField(max_length=22)
     def __str__(self):
-       return f"{self.categoriaReferente}, {self.subcategoriaReferente}"
+       return f"{self.name}"
 
 class subcategoriaProduto(models.Model):
-    subcategoriaReferente = models.CharField(max_length=22)
+    name = models.CharField(max_length=22)
+    parent = models.ForeignKey('categoriaProduto', related_name='parent', on_delete=models.CASCADE)
+
     def __str__(self):
-       return f"{self.subcategoriaReferente}"
+        return f"{self.name}"
+
+
+
+    # def __str__(self):                           
+    #     full_path = [self.name]            
+    #     k = self.parent
+    #     while k is not None:
+    #         full_path.append(k.name)
+    #         k = k.parent
+
+    #     return ' -> '.join(full_path[::-1])
 
 class ProdutoEstoque(models.Model):
     movimentarEstoque = models.BooleanField()
