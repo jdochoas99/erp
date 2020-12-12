@@ -1,37 +1,27 @@
-{% extends 'client/layout.html' %}
-{% block head %}
+{% extends 'client/layout.html' %} {% block head %}
 <title>index</title>
-{% endblock head %}
-{% block nav %}
-pessoas
-{% endblock nav %}
-
-{% block body %}
+{% endblock head %} {% block nav %} pessoas {% endblock nav %} {% block body %}
 <div class="container-sm">
-<table class="table table-striped">
-    
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">nome</th>
-      <th scope="col">CPF</th>
-      <th scope="col">Endereço</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    {%for Pessoa in pessoas%}
-      <th scope="row">{{Pessoa.id}}</th>
-      <td>{{Pessoa.nome}}</td>
-      <td>{{Pessoa.cpf}}</td>
-      <td>{{Pessoa.endereco}}</td>
-    </tr>
-  </tbody>
-  {% endfor %}
-</table>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Endereço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {%for Pessoa in pessoas%}
+        <th scope="row">{{Pessoa.id}}</th>
+        <td>{{Pessoa.nome}}</td>
+        <td>{{Pessoa.cpf}}</td>
+        <td>{{Pessoa.endereco}}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
 </div>
-
-
-
 
 {% endblock body %}
